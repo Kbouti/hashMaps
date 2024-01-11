@@ -32,19 +32,39 @@ console.log(`Hello from the hash maps console`);
 
 // Create a class HashSet that behaves the same as a HashMap but only contains keys with no values.
 
-
+class Node {
+    constructor(key,value){
+        this.key = key;
+        this.value = value;
+    }
+}
 
 class HashMap {
 
+constructor(){
+    this.buckets = [];
+}
+
 hash(string){
     let hashCode = 0;
-
     const primeNumber = 31;
     for (let i = 0; i < string.length; i++) {
       hashCode = primeNumber * hashCode + string.charCodeAt(i);
     }
-  
     return hashCode;
 }
 
+set(key, value){
+    
 }
+
+}
+
+
+let bees = new HashMap();
+
+let hashedOutput = bees.hash(`Kevin`);
+let hashedAgain = bees.hash(`A`);
+
+console.log(hashedOutput);
+console.log(hashedAgain);
