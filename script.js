@@ -1,7 +1,5 @@
 console.log(`Hello from the hash maps console`);
 
-
-
 // 1. Start by creating a HashMap class or factory function. It’s up to you which you want to use. Then proceed to create the following methods:
 
 // 2. hash takes a value and produces a hash code with it. We did implement a fairly good hash function in the previous lesson. You are free to use that, or if you wish, you can conduct your own research. Beware, this is a deep deep rabbit hole.
@@ -33,38 +31,34 @@ console.log(`Hello from the hash maps console`);
 // Create a class HashSet that behaves the same as a HashMap but only contains keys with no values.
 
 class Node {
-    constructor(key,value){
-        this.key = key;
-        this.value = value;
-    }
+  constructor(key, value) {
+    this.key = key;
+    this.value = value;
+  }
 }
 
 class HashMap {
-
-constructor(){
+  constructor() {
     this.buckets = [];
-}
+  }
 
-hash(string){
+  hash(string) {
     let hashCode = 0;
     const primeNumber = 31;
     for (let i = 0; i < string.length; i++) {
       hashCode = primeNumber * hashCode + string.charCodeAt(i);
     }
     return hashCode;
-}
+  }
 
-set(key, value){
-    
+  set(key, value) {
+    let newNode = new Node(key, value);
+    let hashedKey = this.hash(key);
+    console.log(newNode);
+    console.log(`hashedKey: ${hashedKey}`);
+  }
 }
-
-}
-
 
 let bees = new HashMap();
 
-let hashedOutput = bees.hash(`Kevin`);
-let hashedAgain = bees.hash(`A`);
-
-console.log(hashedOutput);
-console.log(hashedAgain);
+bees.set(`Kevin`, `Whaaaat`);
