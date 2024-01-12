@@ -1,4 +1,3 @@
-
 // 1. Start by creating a HashMap class or factory function. It’s up to you which you want to use. Then proceed to create the following methods:
 
 // 2. hash takes a value and produces a hash code with it. We did implement a fairly good hash function in the previous lesson. You are free to use that, or if you wish, you can conduct your own research. Beware, this is a deep deep rabbit hole.
@@ -37,7 +36,6 @@ class Node {
   }
 
   // Maybe we write the linkedList logic here?
-
 }
 
 class Bucket {
@@ -46,7 +44,6 @@ class Bucket {
     this.contents = null;
   }
 }
-
 
 class HashMap {
   constructor() {
@@ -72,7 +69,7 @@ class HashMap {
     return hashCode;
   }
 
- set(key, value) {
+  set(key, value) {
     console.log(`set function triggered`);
     let newNode = new Node(key, value);
     let hashedKey = this.hash(key);
@@ -87,11 +84,33 @@ class HashMap {
       console.log(`node added to list in bucket ${bucketNumber}`);
       return;
     } else {
-        console.log(`found empty bucket at index ${bucketNumber}`);
+      console.log(`found empty bucket at index ${bucketNumber}`);
       this.buckets[bucketNumber].contents = new Node(key, value);
       console.log(`first node added in bucket ${bucketNumber}`);
       return;
     }
+  }
+
+  get(key) {
+    let returnValue = null;
+    let hashedKey = this.hash(key);
+    let bucketNumber = hashedKey % 16;
+    let targetContents = this.buckets[bucketNumber].contents;
+    if (targetContents == null) {
+      return returnValue;
+    }
+    if (targetContents.key == key) {
+      returnValue = targetContents.value;
+      return returnValue;
+    }
+    while (targetContents.next !== null) {
+      targetContents = targetContents.next;
+      if (targetContents.key == key) {
+        returnValue = targetContents.value;
+        return returnValue;
+      }
+    }
+    return returnValue;
   }
 }
 
@@ -101,10 +120,10 @@ bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Kevhhghjkjhhin`, `Whaaaat`);
 bees.set(`Kevfgsdn`, `Whaaaat`);
 bees.set(`Kevertetin`, `Whaaaat`);
-bees.set(`hhgdf`, `Whaaaat`);
+bees.set(`Sally`, `Shitfuckery`);
 bees.set(`dfghdfghgg`, `Whaaaat`);
 
-
-
+console.log(bees.get(`Kevin`));
+console.log(bees.get(`Sally`));
 
 // Wait a minute -- Should I establish a linkedList object and node first? I mean the node is there but yea, we need the linkedList class to add and read from it
