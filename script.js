@@ -82,7 +82,7 @@ class HashMap {
     return hashCode;
   }
 
- set(key, value) {
+  set(key, value) {
     console.log(`set function triggered`);
 
     let newNode = new Node(key, value);
@@ -102,9 +102,18 @@ class HashMap {
       console.log(currentNode);
       // Somehow currentNode is undefined inside this while loop
 
-        while (currentNode.next !== null) {
-          currentNode = currentNode.next;
+      if (currentNode.contents.next !== null) {
+        console.log(`the node in the bucket has a next object`);
+        let lastNode = currentNode.contents.next;
+        while (lastNode.next !== null) {
+          lastNode = lastNode.next;
         }
+        // Gotta figure out why currentNode/NextNode isn't persisting in the while loop
+      }
+
+      // while (currentNode.next !== null) {
+      //   currentNode = currentNode.next;
+      // }
       currentNode.next = new Node(key, value);
     } else {
       this.buckets[bucketNumber].contents = new Node(key, value);
