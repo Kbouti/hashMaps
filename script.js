@@ -38,11 +38,26 @@ class Node {
   }
 }
 
+class Bucket {
+  constructor(index) {
+    this.index = index;
+    this.contents = null;
+  }
+}
+
 class HashMap {
   constructor() {
-    this.buckets = [];
     this.capacity = 16;
-    this.loadFactor = .75;
+    this.loadFactor = 0.75;
+    this.buckets = this.generateBuckets(this.capacity);
+  }
+
+  generateBuckets(size) {
+    console.log(`generate buckets triggered`)
+    let array = [];
+    for (let i = 0; i < size; i++) {
+      array.push(new Bucket(i));
+    }
   }
 
   hash(string) {
@@ -55,6 +70,12 @@ class HashMap {
   }
 
   set(key, value) {
+    console.log(`set function triggered`);
+    console.log(this.buckets);
+
+    // Perhaps I should establish the buckets array here?
+
+
     let newNode = new Node(key, value);
     let hashedKey = this.hash(key);
     console.log(newNode);
@@ -62,20 +83,20 @@ class HashMap {
     let bucketNumber = hashedKey % this.capacity;
     console.log(`bucketNumber: ${bucketNumber}`);
 
-console.log(this.buckets)
+    console.log(this.buckets);
+    console.log(buckets[0]);
 
-if (this.buckets[bucketNumber] !== undefined){
-    console.log(`Something in this bucket already`);
-    console.log(this.buckets[bucketNumber])
-   let currentNode = this.buckets[bucketNumber];
-    while (currentNode.next !== null){
+    if (this.buckets[bucketNumber] !== undefined) {
+      console.log(`Something in this bucket already`);
+      console.log(this.buckets[bucketNumber]);
+      let currentNode = this.buckets[bucketNumber];
+      while (currentNode.next !== null) {
         currentNode = currentNode.next;
+      }
+      currentNode.next = new Node(key, value);
+    } else {
+      this.buckets[bucketNumber] = new Node(key, value);
     }
-    currentNode.next = new Node (key, value);
-} else{
-    this.buckets[bucketNumber] = new Node(key, value);
-}
-
   }
 }
 
