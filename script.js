@@ -45,19 +45,32 @@ class Bucket {
   }
 }
 
+// function generateBuckets(size){
+//     //takes the length of the array you want, returns an array containing empty bucket objects
+//     console.log(`generate buckets triggered, size: ${size}`);
+//     let array = [];
+//     for (let i = 0; i < size; i++) {
+//       array.push(new Bucket(i));
+//     }
+// return array;
+// }
+// Was I just not returning the array on this function before?
+
 class HashMap {
   constructor() {
     this.capacity = 16;
     this.loadFactor = 0.75;
     this.buckets = this.generateBuckets(this.capacity);
+    // this.buckets = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
   }
 
   generateBuckets(size) {
-    console.log(`generate buckets triggered`)
+    console.log(`generate buckets triggered`);
     let array = [];
     for (let i = 0; i < size; i++) {
       array.push(new Bucket(i));
     }
+    return array;
   }
 
   hash(string) {
@@ -69,12 +82,8 @@ class HashMap {
     return hashCode;
   }
 
-  set(key, value) {
+ set(key, value) {
     console.log(`set function triggered`);
-    console.log(this.buckets);
-
-    // Perhaps I should establish the buckets array here?
-
 
     let newNode = new Node(key, value);
     let hashedKey = this.hash(key);
@@ -84,18 +93,21 @@ class HashMap {
     console.log(`bucketNumber: ${bucketNumber}`);
 
     console.log(this.buckets);
-    console.log(buckets[0]);
+    console.log(this.buckets[0]);
 
-    if (this.buckets[bucketNumber] !== undefined) {
+    if (this.buckets[bucketNumber].contents !== null) {
       console.log(`Something in this bucket already`);
-      console.log(this.buckets[bucketNumber]);
+      console.log(this.buckets[bucketNumber].contents);
       let currentNode = this.buckets[bucketNumber];
-      while (currentNode.next !== null) {
-        currentNode = currentNode.next;
-      }
+      console.log(currentNode);
+      // Somehow currentNode is undefined inside this while loop
+
+        while (currentNode.next !== null) {
+          currentNode = currentNode.next;
+        }
       currentNode.next = new Node(key, value);
     } else {
-      this.buckets[bucketNumber] = new Node(key, value);
+      this.buckets[bucketNumber].contents = new Node(key, value);
     }
   }
 }
