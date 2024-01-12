@@ -34,12 +34,15 @@ class Node {
   constructor(key, value) {
     this.key = key;
     this.value = value;
+    this.next;
   }
 }
 
 class HashMap {
   constructor() {
     this.buckets = [];
+    this.capacity = 16;
+    this.loadFactor = .75;
   }
 
   hash(string) {
@@ -56,9 +59,29 @@ class HashMap {
     let hashedKey = this.hash(key);
     console.log(newNode);
     console.log(`hashedKey: ${hashedKey}`);
+    let bucketNumber = hashedKey % this.capacity;
+    console.log(`bucketNumber: ${bucketNumber}`);
+
+console.log(this.buckets)
+
+if (this.buckets[bucketNumber] !== undefined){
+    console.log(`Something in this bucket already`);
+    console.log(this.buckets[bucketNumber])
+   let currentNode = this.buckets[bucketNumber];
+    while (currentNode.next !== null){
+        currentNode = currentNode.next;
+    }
+    currentNode.next = new Node (key, value);
+} else{
+    this.buckets[bucketNumber] = new Node(key, value);
+}
+
   }
 }
 
 let bees = new HashMap();
 
 bees.set(`Kevin`, `Whaaaat`);
+bees.set(`Kevhhhin`, `Whaaaat`);
+bees.set(`Kevfgsdn`, `Whaaaat`);
+bees.set(`Kevertetin`, `Whaaaat`);
