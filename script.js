@@ -70,8 +70,10 @@ class HashMap {
   }
 
   set(key, value) {
-    let hashedKey = this.hash(key);
-    let bucketNumber = hashedKey % this.capacity;
+    let bucketNumber = this.hash(key) % this.capacity;
+    if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
+      throw new Error(`Trying to access index out of bound"`);
+    }
     if (this.buckets[bucketNumber].contents !== null) {
       let currentNode = this.buckets[bucketNumber];
       while (currentNode.contents.next !== null) {
@@ -89,7 +91,7 @@ class HashMap {
     let bucketNumber = this.hash(key) % this.capacity;
     let targetContents = this.buckets[bucketNumber].contents;
     if (targetContents == null) {
-      return null
+      return null;
     }
     if (targetContents.key == key) {
       return targetContents.value;
@@ -97,10 +99,10 @@ class HashMap {
     while (targetContents.next !== null) {
       targetContents = targetContents.next;
       if (targetContents.key == key) {
-        return  targetContents.value;
+        return targetContents.value;
       }
     }
-    return null
+    return null;
   }
 }
 
