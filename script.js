@@ -1,4 +1,3 @@
-console.log(`Hello from the hash maps console`);
 
 // 1. Start by creating a HashMap class or factory function. It’s up to you which you want to use. Then proceed to create the following methods:
 
@@ -34,8 +33,11 @@ class Node {
   constructor(key, value) {
     this.key = key;
     this.value = value;
-    this.next;
+    this.next = null;
   }
+
+  // Maybe we write the linkedList logic here?
+
 }
 
 class Bucket {
@@ -45,23 +47,12 @@ class Bucket {
   }
 }
 
-// function generateBuckets(size){
-//     //takes the length of the array you want, returns an array containing empty bucket objects
-//     console.log(`generate buckets triggered, size: ${size}`);
-//     let array = [];
-//     for (let i = 0; i < size; i++) {
-//       array.push(new Bucket(i));
-//     }
-// return array;
-// }
-// Was I just not returning the array on this function before?
 
 class HashMap {
   constructor() {
     this.capacity = 16;
     this.loadFactor = 0.75;
     this.buckets = this.generateBuckets(this.capacity);
-    // this.buckets = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
   }
 
   generateBuckets(size) {
@@ -82,7 +73,7 @@ class HashMap {
     return hashCode;
   }
 
-  set(key, value) {
+ set(key, value) {
     console.log(`set function triggered`);
 
     let newNode = new Node(key, value);
@@ -96,27 +87,21 @@ class HashMap {
     console.log(this.buckets[0]);
 
     if (this.buckets[bucketNumber].contents !== null) {
-      console.log(`Something in this bucket already`);
+      console.log(`Something in bucket ${bucketNumber} already`);
       console.log(this.buckets[bucketNumber].contents);
       let currentNode = this.buckets[bucketNumber];
       console.log(currentNode);
-      // Somehow currentNode is undefined inside this while loop
-
-      if (currentNode.contents.next !== null) {
-        console.log(`the node in the bucket has a next object`);
-        let lastNode = currentNode.contents.next;
-        while (lastNode.next !== null) {
-          lastNode = lastNode.next;
-        }
-        // Gotta figure out why currentNode/NextNode isn't persisting in the while loop
+      while (currentNode.contents.next !== null) {
+        currentNode = currentNode.next;
       }
-
-      // while (currentNode.next !== null) {
-      //   currentNode = currentNode.next;
-      // }
       currentNode.next = new Node(key, value);
+      console.log(`node added to list in bucket ${bucketNumber}`);
+      return;
     } else {
+        console.log(`found empty bucket at index ${bucketNumber}`);
       this.buckets[bucketNumber].contents = new Node(key, value);
+      console.log(`first node added in bucket ${bucketNumber}`);
+      return;
     }
   }
 }
@@ -124,6 +109,13 @@ class HashMap {
 let bees = new HashMap();
 
 bees.set(`Kevin`, `Whaaaat`);
-bees.set(`Kevhhhin`, `Whaaaat`);
+bees.set(`Kevhhghjkjhhin`, `Whaaaat`);
 bees.set(`Kevfgsdn`, `Whaaaat`);
 bees.set(`Kevertetin`, `Whaaaat`);
+bees.set(`hhgdf`, `Whaaaat`);
+bees.set(`dfghdfghgg`, `Whaaaat`);
+
+
+
+
+// Wait a minute -- Should I establish a linkedList object and node first? I mean the node is there but yea, we need the linkedList class to add and read from it
