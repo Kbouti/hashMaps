@@ -92,25 +92,21 @@ class HashMap {
   }
 
   get(key) {
-    let returnValue = null;
-    let hashedKey = this.hash(key);
-    let bucketNumber = hashedKey % 16;
+    let bucketNumber = this.hash(key) % 16;
     let targetContents = this.buckets[bucketNumber].contents;
     if (targetContents == null) {
-      return returnValue;
+      return null
     }
     if (targetContents.key == key) {
-      returnValue = targetContents.value;
-      return returnValue;
+      return targetContents.value;
     }
     while (targetContents.next !== null) {
       targetContents = targetContents.next;
       if (targetContents.key == key) {
-        returnValue = targetContents.value;
-        return returnValue;
+        return  targetContents.value;
       }
     }
-    return returnValue;
+    return null
   }
 }
 
