@@ -56,7 +56,6 @@ class HashMap {
   }
 
   generateBuckets(size) {
-    console.log(`generate buckets triggered`);
     let array = [];
     for (let i = 0; i < size; i++) {
       array.push(new Bucket(i));
@@ -75,22 +74,12 @@ class HashMap {
 
  set(key, value) {
     console.log(`set function triggered`);
-
     let newNode = new Node(key, value);
     let hashedKey = this.hash(key);
-    console.log(newNode);
-    console.log(`hashedKey: ${hashedKey}`);
     let bucketNumber = hashedKey % this.capacity;
-    console.log(`bucketNumber: ${bucketNumber}`);
-
-    console.log(this.buckets);
-    console.log(this.buckets[0]);
-
     if (this.buckets[bucketNumber].contents !== null) {
       console.log(`Something in bucket ${bucketNumber} already`);
-      console.log(this.buckets[bucketNumber].contents);
       let currentNode = this.buckets[bucketNumber];
-      console.log(currentNode);
       while (currentNode.contents.next !== null) {
         currentNode = currentNode.next;
       }
