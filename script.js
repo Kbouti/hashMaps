@@ -70,29 +70,23 @@ class HashMap {
   }
 
   set(key, value) {
-    console.log(`set function triggered`);
-    let newNode = new Node(key, value);
     let hashedKey = this.hash(key);
     let bucketNumber = hashedKey % this.capacity;
     if (this.buckets[bucketNumber].contents !== null) {
-      console.log(`Something in bucket ${bucketNumber} already`);
       let currentNode = this.buckets[bucketNumber];
       while (currentNode.contents.next !== null) {
         currentNode = currentNode.next;
       }
       currentNode.next = new Node(key, value);
-      console.log(`node added to list in bucket ${bucketNumber}`);
       return;
     } else {
-      console.log(`found empty bucket at index ${bucketNumber}`);
       this.buckets[bucketNumber].contents = new Node(key, value);
-      console.log(`first node added in bucket ${bucketNumber}`);
       return;
     }
   }
 
   get(key) {
-    let bucketNumber = this.hash(key) % 16;
+    let bucketNumber = this.hash(key) % this.capacity;
     let targetContents = this.buckets[bucketNumber].contents;
     if (targetContents == null) {
       return null
