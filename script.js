@@ -70,6 +70,8 @@ class HashMap {
   }
 
   set(key, value) {
+    // We may also need to handle overwriting a key that already exists
+
     let bucketNumber = this.hash(key) % this.capacity;
     if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
       throw new Error(`Trying to access index out of bound"`);
@@ -104,6 +106,25 @@ class HashMap {
     }
     return null;
   }
+
+  has(key) {
+    let bucketNumber = this.hash(key) % this.capacity;
+    let targetContents = this.buckets[bucketNumber].contents;
+    if (targetContents == null) {
+      console.log(`Nothing in this bucket`);
+      return false;
+    }
+    if (targetContents.key == key) {
+      return true;
+    }
+    while (targetContents.next !== null) {
+      targetContents = targetContents.next;
+      if (targetContents.key == key) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 let bees = new HashMap();
@@ -114,8 +135,16 @@ bees.set(`Kevfgsdn`, `Whaaaat`);
 bees.set(`Kevertetin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
 bees.set(`dfghdfghgg`, `Whaaaat`);
+bees.set(`dfghdfghsdfgg`, `Whaaaat`);
+bees.set(`dfddsfgghdfghgg`, `Whaaaat`);
+bees.set(`dfddsfgghaasdfghgg`, `Whaaaat`);
 
-console.log(bees.get(`Kevin`));
-console.log(bees.get(`Sally`));
+// console.log(bees.get(`Kevin`));
+// console.log(bees.get(`Sally`));
+console.log(bees.get(`dfddsfgghdfghgg`));
+console.log(bees.has(`dfddsfgghdfghgg`));
 
-// Wait a minute -- Should I establish a linkedList object and node first? I mean the node is there but yea, we need the linkedList class to add and read from it
+
+
+// This isn't working like it should. Not finding this value
+// Add console.logs to figure out the issue
