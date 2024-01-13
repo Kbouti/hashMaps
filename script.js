@@ -76,15 +76,15 @@ class HashMap {
     }
     if (this.buckets[bucketNumber].contents !== null) {
       let firstKey = this.buckets[bucketNumber].contents.key;
-        if (firstKey == key){
-            let targetNode = this.buckets[bucketNumber].contents;
-            targetNode.value = value;
-        }
+      if (firstKey == key) {
+        let targetNode = this.buckets[bucketNumber].contents;
+        targetNode.value = value;
+      }
       let currentNode = this.buckets[bucketNumber].contents;
       while (currentNode.next !== null) {
-        if ( currentNode.next.key == key){
-            let targetNode = currentNode.next;
-            targetNode.value = value;
+        if (currentNode.next.key == key) {
+          let targetNode = currentNode.next;
+          targetNode.value = value;
         }
         currentNode = currentNode.next;
       }
@@ -132,6 +132,19 @@ class HashMap {
     }
     return false;
   }
+
+  remove(key) {
+    if (!this.has(key)){
+        console.log(`Trying to remove a key that does not exist`);
+        return null;
+    }
+console.log(`Key does exist`);
+let bucketNumber = this.hash(key) % this.capacity;
+let targetContents = this.buckets[bucketNumber].contents;
+
+
+
+  }
 }
 
 let bees = new HashMap();
@@ -145,6 +158,7 @@ bees.set(`tacos`, `something here`);
 // console.log(bees.get(`Sally`));
 console.log(bees.get(`tacos`));
 console.log(bees.has(`Sally`));
+bees.remove(`Sally`)
 
 // This isn't working like it should. Not finding this value
 // Add console.logs to figure out the issue
