@@ -70,7 +70,6 @@ class HashMap {
   }
 
   set(key, value) {
-    // We may also need to handle overwriting a key that already exists
     console.log(`setting key: ${key}`);
     let bucketNumber = this.hash(key) % this.capacity;
     if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
@@ -78,36 +77,27 @@ class HashMap {
     }
     if (this.buckets[bucketNumber].contents !== null) {
       console.log(`bucketNo. ${bucketNumber} already taken`);
-      // We should check if it's the same key here
-
       let firstKey = this.buckets[bucketNumber].contents.key;
       console.log(`The key to the first value in this bucket is: ${firstKey}`);
-
         if (firstKey == key){
             let targetNode = this.buckets[bucketNumber].contents;
             targetNode.value = value;
-            console.log(`At this point we should have rewritten the value at the given (duplicated) key`);
+            console.log(`At this point we should have rewritten the value at key: ${key}`);
         }
-
       let currentNode = this.buckets[bucketNumber].contents;
       while (currentNode.next !== null) {
-
-
         if ( currentNode.next.key == key){
             console.log(`found duplicate key in linkedList`);
             let targetNode = currentNode.next;
             targetNode.value = value;
-            console.log(`At this point we should have rewritten the value at the given (duplicated) key`);
+            console.log(`At this point we should have rewritten the value at key: ${key}`);
         }
-
-
         currentNode = currentNode.next;
       }
       currentNode.next = new Node(key, value);
       return;
     } else {
       console.log(`Adding new node to empty bucket ${bucketNumber}`);
-
       this.buckets[bucketNumber].contents = new Node(key, value);
       return;
     }
@@ -156,13 +146,12 @@ let bees = new HashMap();
 bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
 bees.set(`tacos`, `first tacos`);
-// bees.set(`tacos`, `something here`);
-bees.set(`dfddsfgghaasdfghgg`, `Whaaaat`);
+bees.set(`tacos`, `something here`);
 
 // console.log(bees.get(`Kevin`));
 // console.log(bees.get(`Sally`));
 console.log(bees.get(`tacos`));
-console.log(bees.has(`tacos`));
+console.log(bees.has(`Sally`));
 
 // This isn't working like it should. Not finding this value
 // Add console.logs to figure out the issue
