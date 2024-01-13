@@ -139,6 +139,11 @@ class HashMap {
       return null;
     }
     console.log(`Key does exist`);
+
+
+// I think maybe we write remove() on the node class so we can recursively call it in the linkedList
+
+
     let bucketNumber = this.hash(key) % this.capacity;
     let targetContents = this.buckets[bucketNumber].contents;
     if (targetContents.key == key) {
