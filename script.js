@@ -70,34 +70,27 @@ class HashMap {
   }
 
   set(key, value) {
-    console.log(`setting key: ${key}`);
     let bucketNumber = this.hash(key) % this.capacity;
     if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
       throw new Error(`Trying to access index out of bound"`);
     }
     if (this.buckets[bucketNumber].contents !== null) {
-      console.log(`bucketNo. ${bucketNumber} already taken`);
       let firstKey = this.buckets[bucketNumber].contents.key;
-      console.log(`The key to the first value in this bucket is: ${firstKey}`);
         if (firstKey == key){
             let targetNode = this.buckets[bucketNumber].contents;
             targetNode.value = value;
-            console.log(`At this point we should have rewritten the value at key: ${key}`);
         }
       let currentNode = this.buckets[bucketNumber].contents;
       while (currentNode.next !== null) {
         if ( currentNode.next.key == key){
-            console.log(`found duplicate key in linkedList`);
             let targetNode = currentNode.next;
             targetNode.value = value;
-            console.log(`At this point we should have rewritten the value at key: ${key}`);
         }
         currentNode = currentNode.next;
       }
       currentNode.next = new Node(key, value);
       return;
     } else {
-      console.log(`Adding new node to empty bucket ${bucketNumber}`);
       this.buckets[bucketNumber].contents = new Node(key, value);
       return;
     }
