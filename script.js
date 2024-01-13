@@ -71,12 +71,25 @@ class HashMap {
 
   set(key, value) {
     // We may also need to handle overwriting a key that already exists
-
+    console.log(`setting key: ${key}`);
     let bucketNumber = this.hash(key) % this.capacity;
     if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
       throw new Error(`Trying to access index out of bound"`);
     }
     if (this.buckets[bucketNumber].contents !== null) {
+      console.log(`bucketNo. ${bucketNumber} already taken`);
+      // We should check if it's the same key here
+
+      let firstKey = this.buckets[bucketNumber].contents.key;
+      console.log(`The key to the first value in this bucket is: ${firstKey}`);
+
+        if (firstKey = key){
+            let targetNode = this.buckets[bucketNumber].contents;
+            targetNode.value = value;
+            console.log(`At this point we should have rewritten the value at the given (duplicated) key`);
+            // We shouldn't be getting here with the test code we've used
+        }
+
       let currentNode = this.buckets[bucketNumber];
       while (currentNode.contents.next !== null) {
         currentNode = currentNode.next;
@@ -84,6 +97,8 @@ class HashMap {
       currentNode.next = new Node(key, value);
       return;
     } else {
+      console.log(`Adding new node to empty bucket`);
+
       this.buckets[bucketNumber].contents = new Node(key, value);
       return;
     }
@@ -143,8 +158,6 @@ bees.set(`dfddsfgghaasdfghgg`, `Whaaaat`);
 // console.log(bees.get(`Sally`));
 console.log(bees.get(`dfddsfgghdfghgg`));
 console.log(bees.has(`dfddsfgghdfghgg`));
-
-
 
 // This isn't working like it should. Not finding this value
 // Add console.logs to figure out the issue
