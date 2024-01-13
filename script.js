@@ -134,20 +134,54 @@ class HashMap {
   }
 
   remove(key) {
-    if (!this.has(key)){
-        console.log(`Trying to remove a key that does not exist`);
-        return null;
+    if (!this.has(key)) {
+      console.log(`Trying to remove a key that does not exist`);
+      return null;
     }
-console.log(`Key does exist`);
-let bucketNumber = this.hash(key) % this.capacity;
-let targetContents = this.buckets[bucketNumber].contents;
+    console.log(`Key does exist`);
+    let bucketNumber = this.hash(key) % this.capacity;
+    let targetContents = this.buckets[bucketNumber].contents;
+    if (targetContents.key == key) {
+      console.log(
+        `need to remove key: ${targetContents.key} value: ${targetContents.value}`
+      );
+      if (targetContents.next == null) {
+        console.log(targetContents);
+        this.buckets[bucketNumber].contents = null;
+        console.log(targetContents);
+        console.log(`deleted`);
+        return;
+      }
 
+      // ************************************************************************
+      // Gotta figure this part out:
 
-
+      while (targetContents.next !== null) {
+        let nextNode = targetContents.next;
+        if (nextNode.key == key) {
+          if (nextNode.next == null) {
+            targetNode.next = null;
+            //But we gotta make sure we're changing the actual object's next - not just the reference to it
+          } else {
+            targetNode.next = nextNode.next;
+          }
+        }
+      }
+      this.buckets[bucketNumber].contents = targetContents.next;
+      console.log(`deleted, and set next reference`);
+      return;
+    }
   }
+  // ************************************************************************
 }
 
 let bees = new HashMap();
+
+bees.set(`Kevdsin`, `Whaaaat`);
+bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
+bees.set(`Kevsdfin`, `Whaaaat`);
+bees.set(`Kevdssssin`, `Whaaaat`);
+bees.set(`Kevhljhhin`, `Whaaaat`);
 
 bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
@@ -155,10 +189,11 @@ bees.set(`tacos`, `first tacos`);
 bees.set(`tacos`, `something here`);
 
 // console.log(bees.get(`Kevin`));
-// console.log(bees.get(`Sally`));
-console.log(bees.get(`tacos`));
+// console.log(bees.get(`tacos`));
 console.log(bees.has(`Sally`));
-bees.remove(`Sally`)
+bees.remove(`Sally`);
+console.log(bees.has(`Sally`));
+console.log(bees.get(`Sally`));
 
 // This isn't working like it should. Not finding this value
 // Add console.logs to figure out the issue
