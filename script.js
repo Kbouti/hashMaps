@@ -90,22 +90,16 @@ class HashMap {
   }
 
   set(key, value) {
+    if (this.has(key)) {
+      this.remove(key);
+    }
     let bucketNumber = this.hash(key) % this.capacity;
     if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
       throw new Error(`Trying to access index out of bound"`);
     }
     if (this.buckets[bucketNumber].contents !== null) {
-      let firstKey = this.buckets[bucketNumber].contents.key;
-      if (firstKey == key) {
-        let targetNode = this.buckets[bucketNumber].contents;
-        targetNode.value = value;
-      }
       let currentNode = this.buckets[bucketNumber].contents;
       while (currentNode.next !== null) {
-        if (currentNode.next.key == key) {
-          let targetNode = currentNode.next;
-          targetNode.value = value;
-        }
         currentNode = currentNode.next;
       }
       currentNode.next = new Node(key, value);
@@ -198,13 +192,13 @@ bees.set(`Kevhljhhin`, `Whaaaat`);
 // bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
 bees.set(`tacos`, `first tacos`);
-// bees.set(`tacos`, `something here`);
+bees.set(`tacos`, `second tacos`);
 
 // console.log(bees.get(`Kevin`));
 // console.log(bees.get(`tacos`));
-console.log(bees.has(`Kevhljhhin`));
-bees.remove(`Kevhljhhin`);
-console.log(bees.has(`Kevhljhhin`));
+console.log(bees.has(`tacos`));
+bees.remove(`tacos`);
+console.log(bees.has(`tacos`));
 // console.log(bees.get(`Sally`));
 
 // Set function isn't working when repeating a key. Both keys still exist in the list
