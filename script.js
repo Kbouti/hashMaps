@@ -177,8 +177,26 @@ class HashMap {
     let rootNode = this.buckets[bucketNumber].contents;
     let currentNode = rootNode;
 
-    currentNode.remove(rootNode, key);
 
+    if (rootNode.key == key && rootNode.next == null){
+        console.log(`key found in rootNode, no following nodes`)
+        this.buckets[bucketNumber].contents = null;
+        return;
+    }
+else if (rootNode.key == key && rootNode.next !== null){
+    console.log(`key found in rootNode, more nodes detected`)
+    let nextNode = rootNode.next;
+    this.buckets[bucketNumber].contents = nextNode;
+
+
+console.log(this.buckets[bucketNumber].contents.next)
+
+    return
+}
+
+currentNode = currentNode.next;
+    currentNode.remove(rootNode, key);
+return;
     // ************************************************************************
   }
 }
@@ -203,5 +221,6 @@ bees.remove(`Sally`);
 console.log(bees.has(`Sally`));
 // console.log(bees.get(`Sally`));
 
-// This isn't working like it should. Not finding this value
-// Add console.logs to figure out the issue
+
+
+// Set function isn't working when repeating a key. Both keys still exist in the list
