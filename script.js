@@ -35,7 +35,29 @@ class Node {
     this.next = null;
   }
 
-  // Maybe we write the linkedList logic here?
+  // ************************************************************************
+
+  remove(rootNode, key) {
+    console.log(`remove method called on node`);
+    // if (rootNode.key == key){
+    //     console.log(`rootNode key matches key ${key}`);
+    // }
+    // ^ We can check the rootNode in the hashMap class method
+
+    // Would be more helpful to have previousNode than rootNode passed in as an argument
+
+    if (this.key == key) {
+      console.log(`found the key to remove`);
+    }
+
+    if (this.next !== null) {
+      console.log(`there's another node to check`);
+      let currentNode = this.next;
+
+      currentNode.remove(rootNode, key);
+    }
+  }
+  // ************************************************************************
 }
 
 class Bucket {
@@ -140,44 +162,16 @@ class HashMap {
     }
     console.log(`Key does exist`);
 
-
-// I think maybe we write remove() on the node class so we can recursively call it in the linkedList
-
+    // ************************************************************************
 
     let bucketNumber = this.hash(key) % this.capacity;
-    let targetContents = this.buckets[bucketNumber].contents;
-    if (targetContents.key == key) {
-      console.log(
-        `need to remove key: ${targetContents.key} value: ${targetContents.value}`
-      );
-      if (targetContents.next == null) {
-        console.log(targetContents);
-        this.buckets[bucketNumber].contents = null;
-        console.log(targetContents);
-        console.log(`deleted`);
-        return;
-      }
+    let rootNode = this.buckets[bucketNumber].contents;
+    let currentNode = rootNode;
 
-      // ************************************************************************
-      // Gotta figure this part out:
+    currentNode.remove(rootNode, key);
 
-      while (targetContents.next !== null) {
-        let nextNode = targetContents.next;
-        if (nextNode.key == key) {
-          if (nextNode.next == null) {
-            targetNode.next = null;
-            //But we gotta make sure we're changing the actual object's next - not just the reference to it
-          } else {
-            targetNode.next = nextNode.next;
-          }
-        }
-      }
-      this.buckets[bucketNumber].contents = targetContents.next;
-      console.log(`deleted, and set next reference`);
-      return;
-    }
+    // ************************************************************************
   }
-  // ************************************************************************
 }
 
 let bees = new HashMap();
