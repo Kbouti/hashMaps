@@ -185,6 +185,28 @@ class HashMap {
     }
     return;
   }
+
+keys(){
+    console.log(`keys function called`);
+    if (this.length() === 0){
+        console.log(`empty hash table, returning null`);
+        return null;
+    }
+    let array = [];
+    for (let i = 0; i < this.capacity; i++){
+        if (this.buckets[i].contents !== null){
+            let currentNode = this.buckets[i].contents;
+            array.push(currentNode.key);
+            while(currentNode.next !== null){
+                array.push(currentNode.next.key);
+                currentNode = currentNode.next;
+            }
+        }
+    }
+    return array;
+}
+
+
 }
 
 let bees = new HashMap();
@@ -207,5 +229,6 @@ console.log(bees.has(`tacos`));
 console.log(bees.has(`tacos`));
 console.log(bees.get(`tacos`));
 console.log(bees.length());
-bees.clear();
-console.log(bees.length());
+// bees.clear();
+// console.log(bees.length());
+console.log(bees.keys())
