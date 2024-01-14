@@ -38,32 +38,21 @@ class Node {
   // ************************************************************************
 
   remove(previousNode, key) {
-    console.log(`remove method called on node`);
-let currentNode = this;
-    // ^ We can check the rootNode in the hashMap class method
-
-    // Would be more helpful to have previousNode than rootNode passed in as an argument
-
+    console.log(`remove method called on ${this.key}`);
+    let currentNode = this;
     if (currentNode.key == key) {
-      console.log(`found the key to remove`);
-      // Need to remove this node by setting previousNode to currentNode.next
-      
+      if (currentNode.next == null) {
+        previousNode.next = null;
+        console.log(`Key removed`);
+        return;
+      }
       previousNode.next = currentNode.next;
-      
-console.log(`previousNode.key: ${previousNode.key}`);
-console.log(`currentNode.key: ${currentNode.key}`);
-
+      console.log(`Key removed`);
       return;
     }
-
-
-console.log(`didn't find key yet`);
-    while (currentNode.next !== null) {
-      console.log(`there's another node to check`);
-      currentNode = currentNode.next;
-      previousNode = currentNode;
-      currentNode.remove(previousNode, key);
-    }
+    console.log(`didn't find key yet`);
+    let nextNode = currentNode.next;
+    nextNode.remove(currentNode, key);
     return;
   }
   // ************************************************************************
@@ -177,50 +166,45 @@ class HashMap {
     let rootNode = this.buckets[bucketNumber].contents;
     let currentNode = rootNode;
 
-
-    if (rootNode.key == key && rootNode.next == null){
-        console.log(`key found in rootNode, no following nodes`)
-        this.buckets[bucketNumber].contents = null;
-        return;
+    if (rootNode.key == key && rootNode.next == null) {
+      console.log(`key found in rootNode, no following nodes`);
+      this.buckets[bucketNumber].contents = null;
+      console.log(`Key removed`);
+      return;
+    } else if (rootNode.key == key && rootNode.next !== null) {
+      console.log(`key found in rootNode, more nodes detected`);
+      let nextNode = rootNode.next;
+      this.buckets[bucketNumber].contents = nextNode;
+      console.log(this.buckets[bucketNumber].contents.next);
+      console.log(`Key removed`);
+      return;
     }
-else if (rootNode.key == key && rootNode.next !== null){
-    console.log(`key found in rootNode, more nodes detected`)
-    let nextNode = rootNode.next;
-    this.buckets[bucketNumber].contents = nextNode;
 
-
-console.log(this.buckets[bucketNumber].contents.next)
-
-    return
-}
-
-currentNode = currentNode.next;
+    currentNode = currentNode.next;
     currentNode.remove(rootNode, key);
-return;
+    return;
     // ************************************************************************
   }
 }
 
 let bees = new HashMap();
 
-// bees.set(`Kevdsin`, `Whaaaat`);
-// bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
-// bees.set(`Kevsdfin`, `Whaaaat`);
-// bees.set(`Kevdssssin`, `Whaaaat`);
-// bees.set(`Kevhljhhin`, `Whaaaat`);
+bees.set(`Kevdsin`, `Whaaaat`);
+bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
+bees.set(`Kevsdfin`, `Whaaaat`);
+bees.set(`Kevdssssin`, `Whaaaat`);
+bees.set(`Kevhljhhin`, `Whaaaat`);
 
 // bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
 bees.set(`tacos`, `first tacos`);
-bees.set(`tacos`, `something here`);
+// bees.set(`tacos`, `something here`);
 
 // console.log(bees.get(`Kevin`));
 // console.log(bees.get(`tacos`));
-console.log(bees.has(`Sally`));
-bees.remove(`Sally`);
-console.log(bees.has(`Sally`));
+console.log(bees.has(`Kevhljhhin`));
+bees.remove(`Kevhljhhin`);
+console.log(bees.has(`Kevhljhhin`));
 // console.log(bees.get(`Sally`));
-
-
 
 // Set function isn't working when repeating a key. Both keys still exist in the list
