@@ -206,6 +206,26 @@ keys(){
     return array;
 }
 
+values(){
+    console.log(`values function called`);
+    if (this.length() === 0){
+        console.log(`empty hash table, returning null`);
+        return null;
+    }
+    let array = [];
+    for (let i = 0; i < this.capacity; i++){
+        if (this.buckets[i].contents !== null){
+            let currentNode = this.buckets[i].contents;
+            array.push(currentNode.value);
+            while(currentNode.next !== null){
+                array.push(currentNode.next.value);
+                currentNode = currentNode.next;
+            }
+        }
+    }
+    return array;
+}
+
 
 }
 
@@ -231,4 +251,4 @@ console.log(bees.get(`tacos`));
 console.log(bees.length());
 // bees.clear();
 // console.log(bees.length());
-console.log(bees.keys())
+console.log(bees.values())
