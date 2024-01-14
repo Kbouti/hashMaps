@@ -272,3 +272,30 @@ console.log(bees.length());
 console.log(bees.entries());
 console.log(bees.keys());
 console.log(bees.values());
+
+
+
+class HashSet {
+    constructor() {
+        this.capacity = 3;
+        this.loadFactor = 0.75;
+        this.buckets = this.generateBuckets(this.capacity);
+      }
+    
+      generateBuckets(size) {
+        let array = [];
+        for (let i = 0; i < size; i++) {
+          array.push(new Bucket(i));
+        }
+        return array;
+      }
+    
+      hash(string) {
+        let hashCode = 0;
+        const primeNumber = 31;
+        for (let i = 0; i < string.length; i++) {
+          hashCode = primeNumber * hashCode + string.charCodeAt(i);
+        }
+        return hashCode;
+      }
+}
