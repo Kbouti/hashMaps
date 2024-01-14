@@ -47,10 +47,18 @@ let currentNode = this;
     if (currentNode.key == key) {
       console.log(`found the key to remove`);
       // Need to remove this node by setting previousNode to currentNode.next
+      
+      previousNode.next = currentNode.next;
+      
+console.log(`previousNode.key: ${previousNode.key}`);
+console.log(`currentNode.key: ${currentNode.key}`);
+
       return;
     }
 
-    while (this.next !== null) {
+
+console.log(`didn't find key yet`);
+    while (currentNode.next !== null) {
       console.log(`there's another node to check`);
       currentNode = currentNode.next;
       previousNode = currentNode;
@@ -177,13 +185,13 @@ class HashMap {
 
 let bees = new HashMap();
 
-bees.set(`Kevdsin`, `Whaaaat`);
-bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
-bees.set(`Kevsdfin`, `Whaaaat`);
-bees.set(`Kevdssssin`, `Whaaaat`);
-bees.set(`Kevhljhhin`, `Whaaaat`);
+// bees.set(`Kevdsin`, `Whaaaat`);
+// bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
+// bees.set(`Kevsdfin`, `Whaaaat`);
+// bees.set(`Kevdssssin`, `Whaaaat`);
+// bees.set(`Kevhljhhin`, `Whaaaat`);
 
-bees.set(`Kevin`, `Whaaaat`);
+// bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
 bees.set(`tacos`, `first tacos`);
 bees.set(`tacos`, `something here`);
@@ -193,7 +201,7 @@ bees.set(`tacos`, `something here`);
 console.log(bees.has(`Sally`));
 bees.remove(`Sally`);
 console.log(bees.has(`Sally`));
-console.log(bees.get(`Sally`));
+// console.log(bees.get(`Sally`));
 
 // This isn't working like it should. Not finding this value
 // Add console.logs to figure out the issue
