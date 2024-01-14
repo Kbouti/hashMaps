@@ -159,15 +159,33 @@ class HashMap {
     currentNode.remove(rootNode, key);
     return;
   }
+
+  length() {
+    console.log(`length triggered`);
+    let count = 0;
+    console.log(`Number of buckets to check: ${this.capacity}`);
+    for (let i = 0; i < this.capacity; i++) {
+      let currentNode = this.buckets[i].contents;
+      if (currentNode !== null) {
+        count++;
+        while (currentNode.next !== null) {
+          count++;
+          currentNode = currentNode.next;
+        }
+      }
+      console.log(`done counting bucket ${i}`);
+    }
+    return count;
+  }
 }
 
 let bees = new HashMap();
 
-bees.set(`Kevdsin`, `Whaaaat`);
-bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
-bees.set(`Kevsdfin`, `Whaaaat`);
-bees.set(`Kevdssssin`, `Whaaaat`);
-bees.set(`Kevhljhhin`, `Whaaaat`);
+// bees.set(`Kevdsin`, `Whaaaat`);
+// bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
+// bees.set(`Kevsdfin`, `Whaaaat`);
+// bees.set(`Kevdssssin`, `Whaaaat`);
+// bees.set(`Kevhljhhin`, `Whaaaat`);
 
 // bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
@@ -180,5 +198,5 @@ console.log(bees.has(`tacos`));
 // bees.remove(`tacos`);
 console.log(bees.has(`tacos`));
 console.log(bees.get(`tacos`));
+console.log(bees.length());
 
-// Set function isn't working when repeating a key. Both keys still exist in the list
