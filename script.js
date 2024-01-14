@@ -35,27 +35,20 @@ class Node {
     this.next = null;
   }
 
-  // ************************************************************************
-
   remove(previousNode, key) {
-    console.log(`remove method called on ${this.key}`);
     let currentNode = this;
     if (currentNode.key == key) {
       if (currentNode.next == null) {
         previousNode.next = null;
-        console.log(`Key removed`);
         return;
       }
       previousNode.next = currentNode.next;
-      console.log(`Key removed`);
       return;
     }
-    console.log(`didn't find key yet`);
     let nextNode = currentNode.next;
     nextNode.remove(currentNode, key);
     return;
   }
-  // ************************************************************************
 }
 
 class Bucket {
@@ -132,7 +125,6 @@ class HashMap {
     let bucketNumber = this.hash(key) % this.capacity;
     let targetContents = this.buckets[bucketNumber].contents;
     if (targetContents == null) {
-      console.log(`Nothing in this bucket`);
       return false;
     }
     if (targetContents.key == key) {
@@ -152,32 +144,20 @@ class HashMap {
       console.log(`Trying to remove a key that does not exist`);
       return null;
     }
-    console.log(`Key does exist`);
-
-    // ************************************************************************
-
     let bucketNumber = this.hash(key) % this.capacity;
     let rootNode = this.buckets[bucketNumber].contents;
     let currentNode = rootNode;
-
     if (rootNode.key == key && rootNode.next == null) {
-      console.log(`key found in rootNode, no following nodes`);
       this.buckets[bucketNumber].contents = null;
-      console.log(`Key removed`);
       return;
     } else if (rootNode.key == key && rootNode.next !== null) {
-      console.log(`key found in rootNode, more nodes detected`);
       let nextNode = rootNode.next;
       this.buckets[bucketNumber].contents = nextNode;
-      console.log(this.buckets[bucketNumber].contents.next);
-      console.log(`Key removed`);
       return;
     }
-
     currentNode = currentNode.next;
     currentNode.remove(rootNode, key);
     return;
-    // ************************************************************************
   }
 }
 
@@ -197,8 +177,8 @@ bees.set(`tacos`, `second tacos`);
 // console.log(bees.get(`Kevin`));
 // console.log(bees.get(`tacos`));
 console.log(bees.has(`tacos`));
-bees.remove(`tacos`);
+// bees.remove(`tacos`);
 console.log(bees.has(`tacos`));
-// console.log(bees.get(`Sally`));
+console.log(bees.get(`tacos`));
 
 // Set function isn't working when repeating a key. Both keys still exist in the list
