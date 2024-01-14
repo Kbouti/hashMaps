@@ -378,4 +378,53 @@ class HashSet {
     currentNode.remove(rootNode, key);
     return;
   }
+
+  length() {
+    console.log(`length triggered`);
+    let count = 0;
+    console.log(`Number of buckets to check: ${this.capacity}`);
+    for (let i = 0; i < this.capacity; i++) {
+      let currentNode = this.buckets[i].contents;
+      if (currentNode !== null) {
+        count++;
+        while (currentNode.next !== null) {
+          count++;
+          currentNode = currentNode.next;
+        }
+      }
+      console.log(`done counting bucket ${i}`);
+    }
+    return count;
+  }
+
+  clear() {
+    console.log(`Clear function triggered`);
+    for (let i = 0; i < this.capacity; i++) {
+      this.buckets[i].contents = null;
+    }
+    return;
+  }
+
+  keys() {
+    console.log(`keys function called`);
+    if (this.length() === 0) {
+      console.log(`empty hash table, returning null`);
+      return null;
+    }
+    let array = [];
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i].contents !== null) {
+        let currentNode = this.buckets[i].contents;
+        array.push(currentNode.key);
+        while (currentNode.next !== null) {
+          currentNode = currentNode.next;
+          array.push(currentNode.key);
+        }
+      }
+    }
+    return array;
+  }
+
+
+
 }
