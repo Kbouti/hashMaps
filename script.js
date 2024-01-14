@@ -186,56 +186,74 @@ class HashMap {
     return;
   }
 
-keys(){
+  keys() {
     console.log(`keys function called`);
-    if (this.length() === 0){
-        console.log(`empty hash table, returning null`);
-        return null;
+    if (this.length() === 0) {
+      console.log(`empty hash table, returning null`);
+      return null;
     }
     let array = [];
-    for (let i = 0; i < this.capacity; i++){
-        if (this.buckets[i].contents !== null){
-            let currentNode = this.buckets[i].contents;
-            array.push(currentNode.key);
-            while(currentNode.next !== null){
-                array.push(currentNode.next.key);
-                currentNode = currentNode.next;
-            }
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i].contents !== null) {
+        let currentNode = this.buckets[i].contents;
+        array.push(currentNode.key);
+        while (currentNode.next !== null) {
+          currentNode = currentNode.next;
+          array.push(currentNode.key);
         }
+      }
     }
     return array;
-}
+  }
 
-values(){
+  values() {
     console.log(`values function called`);
-    if (this.length() === 0){
-        console.log(`empty hash table, returning null`);
-        return null;
+    if (this.length() === 0) {
+      console.log(`empty hash table, returning null`);
+      return null;
     }
     let array = [];
-    for (let i = 0; i < this.capacity; i++){
-        if (this.buckets[i].contents !== null){
-            let currentNode = this.buckets[i].contents;
-            array.push(currentNode.value);
-            while(currentNode.next !== null){
-                array.push(currentNode.next.value);
-                currentNode = currentNode.next;
-            }
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i].contents !== null) {
+        let currentNode = this.buckets[i].contents;
+        array.push(currentNode.value);
+        while (currentNode.next !== null) {
+          currentNode = currentNode.next;
+          array.push(currentNode.value);
         }
+      }
     }
     return array;
-}
+  }
 
-
+  entries() {
+    console.log(`entries function called`);
+    if (this.length() === 0) {
+      console.log(`empty hash table, returning null`);
+      return null;
+    }
+    let array = [];
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i].contents !== null) {
+        let currentNode = this.buckets[i].contents;
+        array.push([currentNode.key, currentNode.value]);
+        while (currentNode.next !== null) {
+          currentNode = currentNode.next;
+          array.push([currentNode.key, currentNode.value]);
+        }
+      }
+    }
+    return array;
+  }
 }
 
 let bees = new HashMap();
 
-bees.set(`Kevdsin`, `Whaaaat`);
-bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
-bees.set(`Kevsdfin`, `Whaaaat`);
-bees.set(`Kevdssssin`, `Whaaaat`);
-bees.set(`Kevhljhhin`, `Whaaaat`);
+bees.set(`Key1`, `Value1`);
+bees.set(`Key2`, `Value2`);
+bees.set(`Key3`, `Value3`);
+bees.set(`Key4`, `Value4`);
+bees.set(`Key5`, `Value5`);
 
 // bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
@@ -251,4 +269,6 @@ console.log(bees.get(`tacos`));
 console.log(bees.length());
 // bees.clear();
 // console.log(bees.length());
-console.log(bees.values())
+console.log(bees.entries());
+console.log(bees.keys());
+console.log(bees.values());
