@@ -37,25 +37,26 @@ class Node {
 
   // ************************************************************************
 
-  remove(rootNode, key) {
+  remove(previousNode, key) {
     console.log(`remove method called on node`);
-    // if (rootNode.key == key){
-    //     console.log(`rootNode key matches key ${key}`);
-    // }
+let currentNode = this;
     // ^ We can check the rootNode in the hashMap class method
 
     // Would be more helpful to have previousNode than rootNode passed in as an argument
 
-    if (this.key == key) {
+    if (currentNode.key == key) {
       console.log(`found the key to remove`);
+      // Need to remove this node by setting previousNode to currentNode.next
+      return;
     }
 
-    if (this.next !== null) {
+    while (this.next !== null) {
       console.log(`there's another node to check`);
-      let currentNode = this.next;
-
-      currentNode.remove(rootNode, key);
+      currentNode = currentNode.next;
+      previousNode = currentNode;
+      currentNode.remove(previousNode, key);
     }
+    return;
   }
   // ************************************************************************
 }
