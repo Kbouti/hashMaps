@@ -177,15 +177,23 @@ class HashMap {
     }
     return count;
   }
+
+  clear() {
+    console.log(`Clear function triggered`);
+    for (let i = 0; i < this.capacity; i++) {
+      this.buckets[i].contents = null;
+    }
+    return;
+  }
 }
 
 let bees = new HashMap();
 
-// bees.set(`Kevdsin`, `Whaaaat`);
-// bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
-// bees.set(`Kevsdfin`, `Whaaaat`);
-// bees.set(`Kevdssssin`, `Whaaaat`);
-// bees.set(`Kevhljhhin`, `Whaaaat`);
+bees.set(`Kevdsin`, `Whaaaat`);
+bees.set(`Kesdfgsdfgvin`, `Whaaaat`);
+bees.set(`Kevsdfin`, `Whaaaat`);
+bees.set(`Kevdssssin`, `Whaaaat`);
+bees.set(`Kevhljhhin`, `Whaaaat`);
 
 // bees.set(`Kevin`, `Whaaaat`);
 bees.set(`Sally`, `Shitfuckery`);
@@ -199,4 +207,5 @@ console.log(bees.has(`tacos`));
 console.log(bees.has(`tacos`));
 console.log(bees.get(`tacos`));
 console.log(bees.length());
-
+bees.clear();
+console.log(bees.length());
