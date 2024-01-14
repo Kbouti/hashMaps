@@ -298,4 +298,37 @@ class HashSet {
         }
         return hashCode;
       }
+
+set(key){
+
+}
+// Do we need a new node class that does not contain a value property?
+
+
+
+  has(key) {
+    let bucketNumber = this.hash(key) % this.capacity;
+    let targetContents = this.buckets[bucketNumber].contents;
+    if (targetContents == null) {
+      return false;
+    }
+    if (targetContents.key == key) {
+      return true;
+    }
+    while (targetContents.next !== null) {
+      targetContents = targetContents.next;
+      if (targetContents.key == key) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+
+
+
+
+
+
 }
