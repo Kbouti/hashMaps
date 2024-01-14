@@ -28,7 +28,7 @@
 
 // Create a class HashSet that behaves the same as a HashMap but only contains keys with no values.
 
-class Node {
+class MapNode {
   constructor(key, value) {
     this.key = key;
     this.value = value;
@@ -95,10 +95,10 @@ class HashMap {
       while (currentNode.next !== null) {
         currentNode = currentNode.next;
       }
-      currentNode.next = new Node(key, value);
+      currentNode.next = new MapNode(key, value);
       return;
     } else {
-      this.buckets[bucketNumber].contents = new Node(key, value);
+      this.buckets[bucketNumber].contents = new MapNode(key, value);
       return;
     }
   }
@@ -273,38 +273,72 @@ console.log(bees.entries());
 console.log(bees.keys());
 console.log(bees.values());
 
+class SetNode {
+  constructor(key) {
+    this.key = key;
+    this.next = null;
+  }
 
+  remove(previousNode, key) {
+    let currentNode = this;
+    if (currentNode.key == key) {
+      if (currentNode.next == null) {
+        previousNode.next = null;
+        return;
+      }
+      previousNode.next = currentNode.next;
+      return;
+    }
+    let nextNode = currentNode.next;
+    nextNode.remove(currentNode, key);
+    return;
+  }
+}
 
 class HashSet {
-    constructor() {
-        this.capacity = 3;
-        this.loadFactor = 0.75;
-        this.buckets = this.generateBuckets(this.capacity);
+  constructor() {
+    this.capacity = 3;
+    this.loadFactor = 0.75;
+    this.buckets = this.generateBuckets(this.capacity);
+  }
+
+  generateBuckets(size) {
+    let array = [];
+    for (let i = 0; i < size; i++) {
+      array.push(new Bucket(i));
+    }
+    return array;
+  }
+
+  hash(string) {
+    let hashCode = 0;
+    const primeNumber = 31;
+    for (let i = 0; i < string.length; i++) {
+      hashCode = primeNumber * hashCode + string.charCodeAt(i);
+    }
+    return hashCode;
+  }
+
+  set(key) {
+    if (this.has(key)) {
+      this.remove(key);
+    }
+    let bucketNumber = this.hash(key) % this.capacity;
+    if (bucketNumber < 0 || bucketNumber >= this.buckets.length) {
+      throw new Error(`Trying to access index out of bound"`);
+    }
+    if (this.buckets[bucketNumber].contents !== null) {
+      let currentNode = this.buckets[bucketNumber].contents;
+      while (currentNode.next !== null) {
+        currentNode = currentNode.next;
       }
-    
-      generateBuckets(size) {
-        let array = [];
-        for (let i = 0; i < size; i++) {
-          array.push(new Bucket(i));
-        }
-        return array;
-      }
-    
-      hash(string) {
-        let hashCode = 0;
-        const primeNumber = 31;
-        for (let i = 0; i < string.length; i++) {
-          hashCode = primeNumber * hashCode + string.charCodeAt(i);
-        }
-        return hashCode;
-      }
-
-set(key){
-
-}
-// Do we need a new node class that does not contain a value property?
-
-
+      currentNode.next = new SetNode(key);
+      return;
+    } else {
+      this.buckets[bucketNumber].contents = new SetNode(key);
+      return;
+    }
+  }
 
   has(key) {
     let bucketNumber = this.hash(key) % this.capacity;
@@ -324,11 +358,24 @@ set(key){
     return false;
   }
 
-
-
-
-
-
-
-
+  remove(key) {
+    if (!this.has(key)) {
+      console.log(`Trying to remove a key that does not exist`);
+      return null;
+    }
+    let bucketNumber = this.hash(key) % this.capacity;
+    let rootNode = this.buckets[bucketNumber].contents;
+    let currentNode = rootNode;
+    if (rootNode.key == key && rootNode.next == null) {
+      this.buckets[bucketNumber].contents = null;
+      return;
+    } else if (rootNode.key == key && rootNode.next !== null) {
+      let nextNode = rootNode.next;
+      this.buckets[bucketNumber].contents = nextNode;
+      return;
+    }
+    currentNode = currentNode.next;
+    currentNode.remove(rootNode, key);
+    return;
+  }
 }
